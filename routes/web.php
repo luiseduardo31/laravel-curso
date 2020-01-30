@@ -6,7 +6,7 @@ Route::resource('produtos','ProductController');
 /*
 Grupo de Rotas
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth')->group(function(){ 
     Route::prefix('admin')->group(function(){
        
         Route::get('/financeiro', function () {

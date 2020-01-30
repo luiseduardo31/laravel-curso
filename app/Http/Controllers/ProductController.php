@@ -44,7 +44,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all()); Todos os Campos
+        //dd($request->only(['nome','descricao'])); Campos especificos
+        //dd($request->nome; Somente 1 campo
+      if($request->file('foto')->isValid())
+      {
+          dd($request->file('foto')->store('produtos'));
+      }
+
     }
 
     /**
@@ -66,7 +73,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.pages.produtos.edit',compact('id'));
     }
 
     /**
@@ -78,7 +85,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd("Atualizando o produto {$id}");
     }
 
     /**

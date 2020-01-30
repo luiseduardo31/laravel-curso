@@ -6,6 +6,10 @@
 @section('content')
 
  <h1>Exibindo Produtos</h1>
+
+<a href="{{route('produtos.create')}}">Cadastrar</a>
+ 
+ <hr>
  
  @include('admin.includes.alerts',['msg'=> 'Mensagem alerta!'])
 
