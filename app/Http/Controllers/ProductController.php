@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 
 class ProductController extends Controller
 {
-    public function __construct()
+    private $product;
+
+    public function __construct(Product $product)
     {
-        $this->middleware('auth')->only('create');
+        //$this->middleware('auth')->only('create');
+        $this->product = $product;
         
     }
 
@@ -19,11 +23,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response 
      */
-    public function index()
+    public function index(Product $product)
     {
-        $teste = 123;
-        $produtos = ['TV', 'Geladeira','Sofá','Fogão'];
-        return view('admin.pages.produtos.index',compact('teste','produtos'));
+    
+        $produtos =  $this->product->all();
+        return view('admin.pages.produtos.index',compact('produtos'));
     }
 
     /**
@@ -44,13 +48,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $dataForm = $request->except('_token');  
+        $insert = $this->product->insert($dataForm); 
+        // pode-se usar create e usar fillable no model pra escolher os campos
+
+        if($insert)
+        {
+            return redirect()->route('produtos.index');
+        }
+        else
+        {
+            return 'Erro ao cadastrar...';
+        }
+
         //dd($request->all()); Todos os Campos
         //dd($request->only(['nome','descricao'])); Campos especificos
-        //dd($request->nome; Somente 1 campo
-      if($request->file('foto')->isValid())
-      {
-          dd($request->file('foto')->store('produtos'));
-      }
+        //dd($request->nome); Somente 1 campo
+      /**
+       *if($request->file('foto')->isValid())
+             dd($request->file('foto')->store('produtos/teste'));
+        */
 
     }
 

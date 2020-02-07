@@ -18,7 +18,7 @@
  @endcomponent
 
 @forelse ($produtos as $produto)
-    <p>{{$produto}}</p>    
+    <p>{{$produto->id}}: {{$produto->nome}}</p>    
 @empty
     'Não há produtos cadastrados!'
 @endforelse
