@@ -90,7 +90,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.pages.produtos.edit',compact('id'));
+        $product = $this->product->find($id);
+        return view('admin.pages.produtos.edit',compact('product'));
     }
 
     /**
@@ -102,7 +103,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd("Atualizando o produto {$id}");
+        $dataForm = $request->all();
+        $product  = $this->product->find($id);
+        $update   = $product->update($dataForm);
+
+        if($update)
+            return redirect()->route('produtos.index');
+        else
+            return redirect()->route('produtos.edit',  $id);
+      
     }
 
     /**
