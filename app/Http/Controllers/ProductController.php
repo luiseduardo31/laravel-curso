@@ -8,6 +8,7 @@ use App\Product;
 class ProductController extends Controller
 {
     private $product;
+    public $msg;
 
     public function __construct(Product $product)
     {
@@ -54,7 +55,7 @@ class ProductController extends Controller
 
         if($insert)
         {
-            return redirect()->route('produtos.index');
+            return redirect()->route('produtos.index')->with('success', 'Item cadastrado com sucesso');
         }
         else
         {
@@ -79,7 +80,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+       $product = $this->product->find($id);
+       return view('admin.pages.produtos.show', compact('product'));
     }
 
     /**
@@ -108,7 +110,7 @@ class ProductController extends Controller
         $update   = $product->update($dataForm);
 
         if($update)
-            return redirect()->route('produtos.index');
+            return redirect()->route('produtos.index')->with('success', "{$product->nome} atualizado com sucesso");
         else
             return redirect()->route('produtos.edit',  $id);
       
@@ -122,6 +124,16 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = $this->product->find($id);
+        $delete = $product->delete();
+
+        if ($delete)
+        {
+            $msg = 'Excluido!';
+            return redirect()->route('produtos.index')->with('success', "{$product->nome} Excluido com sucesso");
+        }
+        else
+            return redirect()->route('produtos.show', $id);
+
     }
 }

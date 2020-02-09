@@ -1,16 +1,17 @@
 @extends('admin.layout.app')
 
-@section('title','Editando Produtos')
+@section('title','Editando Produto')
 
 @section('content')
 
-<h1>Editando Produtos {{$id}}</h1>
 
-<form action="{{route('produtos.update',$id)}}" method="POST">
-    @method('PUT')
+<form action="{{route('produtos.update',$product->id)}}" method="POST" enctype="multipart/form-data">
     @csrf
-    <input type="text" name="nome" placeholder="Nome:">
-    <input type="text" name="descricao" placeholder="Descrição:">
+    <br/>
+    @method('PUT')
+    <br/>
+    <input type="text" name="nome" placeholder="Nome:" value="{{$product->nome}}">
+    <input type="text" name="descricao" placeholder="Descrição:" value="{{$product->descricao}}">
     <button type="submit" class="btn btn-primary">Enviar</button>
 </form>
 
